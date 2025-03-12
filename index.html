@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Predictor</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
+</head>
+<body>
+    <header>
+        <div class="hero-section">
+            <img src="https://via.placeholder.com/1500x400?text=Empowering+Education+With+AI+Predictions" alt="Header Image" class="header-image">
+            <h1>Student Result Predictor</h1>
+            <p class="tagline">Analyze. Predict. Empower.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2>Enter Details to Predict Results</h2>
+            <form id="prediction-form">
+                <div class="form-group">
+                    <label for="student-age">Student Age:</label>
+                    <input type="number" id="student-age" placeholder="e.g., 18" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sex:</label>
+                    <select id="sex" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="high-school-type">High School Type:</label>
+                    <select id="high-school-type" required>
+                        <option value="Public">Public</option>
+                        <option value="Private">Private</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="scholarship">Scholarship:</label>
+                    <select id="scholarship" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="additional-work">Additional Work:</label>
+                    <select id="additional-work" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sports-activity">Sports Activity:</label>
+                    <select id="sports-activity" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transportation">Transportation:</label>
+                    <select id="transportation" required>
+                        <option value="Bus">Bus</option>
+                        <option value="Car">Car</option>
+                        <option value="Walk">Walk</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weekly-study-hours">Weekly Study Hours:</label>
+                    <input type="number" id="weekly-study-hours" placeholder="e.g., 15" required>
+                </div>
+                <div class="form-group">
+                    <label for="attendance">Attendance (%):</label>
+                    <input type="number" id="attendance" placeholder="e.g., 95" required>
+                </div>
+                <div class="form-group">
+                    <label for="reading">Reading Skills (1-10):</label>
+                    <input type="number" id="reading" placeholder="e.g., 8" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Note-Taking Skills (1-10):</label>
+                    <input type="number" id="notes" placeholder="e.g., 7" required>
+                </div>
+                <div class="form-group">
+                    <label for="listening-in-class">Listening in Class (1-10):</label>
+                    <input type="number" id="listening-in-class" placeholder="e.g., 9" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-work">Project Work (1-10):</label>
+                    <input type="number" id="project-work" placeholder="e.g., 8" required>
+                </div>
+                <button type="submit" class="submit-button">Predict</button>
+            </form>
+            <h3 id="result"></h3>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Student Result Predictor. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script> <!-- Link to JavaScript -->
+</body>
+</html>
