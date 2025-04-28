@@ -3,103 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Result Predictor</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .search {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            animation: slideIn 0.6s ease-in-out;
+        }
+        .search input {
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            width: calc(100% - 50px);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search input:focus {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .search button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        .search img {
+            width: 30px;
+            height: 30px;
+        }
+        .weather-icon, .details img {
+            width: 50px;
+            height: 50px;
+            animation: pop 0.5s ease-in-out;
+        }
+        @keyframes pop {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        .temp, .city {
+            animation: fadeInUp 0.6s ease-in-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+        .details .col {
+            display: flex;
+            align-items: center;
+        }
+        .details .col div {
+            margin-left: 10px;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="hero-section">
-            <img src="https://via.placeholder.com/1500x400?text=Empowering+Education+With+AI+Predictions" alt="Header Image" class="header-image">
-            <h1>Student Result Predictor</h1>
-            <p class="tagline">Analyze. Predict. Empower.</p>
+<div class="card">
+    <div class="search">
+        <input type="text" id="cityInput" placeholder="Enter City Name" spellcheck="false" onkeypress="handleKeyPress(event)">
+        <button onclick="checkWeather()"><img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" alt="search icon"></button>
+    </div>
+    <div class="weather">
+        <img src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png" class="weather-icon" alt="weather icon">
+        <h1 class="temp">--°C</h1>
+        <h2 class="city">City</h2>
+        <div class="details">
+            <div class="col">
+                <img src="https://cdn-icons-png.flaticon.com/512/1048/1048952.png" alt="humidity icon">
+                <div>
+                    <p class="humidity">--%</p>
+                    <p>Humidity</p>
+                </div>
+            </div>
+            <div class="col">
+                <img src="https://cdn-icons-png.flaticon.com/512/61/61456.png" alt="wind icon">
+                <div>
+                    <p class="wind">-- km/h</p>
+                    <p>Wind Speed</p>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+</div>
+<script>
+    const apikey = "ef58cf22c47a1d78baeab71dc8712edb";
 
-    <main>
-        <section class="form-container">
-            <h2>Enter Details to Predict Results</h2>
-            <form id="prediction-form">
-                <div class="form-group">
-                    <label for="student-age">Student Age:</label>
-                    <input type="number" id="student-age" placeholder="e.g., 18" required>
-                </div>
-                <div class="form-group">
-                    <label for="sex">Sex:</label>
-                    <select id="sex" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="high-school-type">High School Type:</label>
-                    <select id="high-school-type" required>
-                        <option value="Public">Public</option>
-                        <option value="Private">Private</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="scholarship">Scholarship:</label>
-                    <select id="scholarship" required>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="additional-work">Additional Work:</label>
-                    <select id="additional-work" required>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="sports-activity">Sports Activity:</label>
-                    <select id="sports-activity" required>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="transportation">Transportation:</label>
-                    <select id="transportation" required>
-                        <option value="Bus">Bus</option>
-                        <option value="Car">Car</option>
-                        <option value="Walk">Walk</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="weekly-study-hours">Weekly Study Hours:</label>
-                    <input type="number" id="weekly-study-hours" placeholder="e.g., 15" required>
-                </div>
-                <div class="form-group">
-                    <label for="attendance">Attendance (%):</label>
-                    <input type="number" id="attendance" placeholder="e.g., 95" required>
-                </div>
-                <div class="form-group">
-                    <label for="reading">Reading Skills (1-10):</label>
-                    <input type="number" id="reading" placeholder="e.g., 8" required>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Note-Taking Skills (1-10):</label>
-                    <input type="number" id="notes" placeholder="e.g., 7" required>
-                </div>
-                <div class="form-group">
-                    <label for="listening-in-class">Listening in Class (1-10):</label>
-                    <input type="number" id="listening-in-class" placeholder="e.g., 9" required>
-                </div>
-                <div class="form-group">
-                    <label for="project-work">Project Work (1-10):</label>
-                    <input type="number" id="project-work" placeholder="e.g., 8" required>
-                </div>
-                <button type="submit" class="submit-button">Predict</button>
-            </form>
-            <h3 id="result"></h3>
-        </section>
-    </main>
+    async function checkWeather() {
+        const city = document.getElementById("cityInput").value;
+        if (!city) {
+            alert("Please enter a city name");
+            return;
+        }
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=${apikey}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                alert("City not found");
+                return;
+            }
+            const data = await response.json();
+            console.log(data);
 
-    <footer>
-        <p>&copy; 2025 Student Result Predictor. All rights reserved.</p>
-    </footer>
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = data.main.temp + "°C"; 
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
 
-    <script src="app.js"></script> <!-- Link to JavaScript -->
+            // Update weather icon based on weather conditions
+            const weatherIcon = document.querySelector(".weather-icon");
+            const weatherCondition = data.weather[0].main.toLowerCase();
+            const iconUrl = getWeatherIconUrl(weatherCondition);
+            weatherIcon.src = iconUrl;
+
+            // Apply animation to weather icon
+            weatherIcon.style.animation = 'pop 0.5s ease-in-out';
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    }
+
+    function getWeatherIconUrl(condition) {
+        const icons = {
+            clear: "https://cdn-icons-png.flaticon.com/512/869/869869.png",
+            clouds: "https://cdn-icons-png.flaticon.com/512/861/861060.png",
+            rain: "https://cdn-icons-png.flaticon.com/512/1163/1163624.png",
+            drizzle: "https://cdn-icons-png.flaticon.com/512/1163/1163624.png",
+            thunderstorm: "https://cdn-icons-png.flaticon.com/512/1146/1146869.png",
+            snow: "https://cdn-icons-png.flaticon.com/512/1178/1178532.png",
+            mist: "https://cdn-icons-png.flaticon.com/512/1348/1348073.png",
+            fog: "https://cdn-icons-png.flaticon.com/512/1348/1348073.png"
+        };
+        return icons[condition] || "https://cdn-icons-png.flaticon.com/512/1163/1163624.png";
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            checkWeather();
+        }
+    }
+
+    // Animate the card on load
+    window.onload = () => {
+        const card = document.querySelector('.card');
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+    };
+</script>
 </body>
 </html>
